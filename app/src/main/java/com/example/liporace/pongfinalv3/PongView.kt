@@ -9,6 +9,7 @@ import android.view.SurfaceView
 import android.view.SurfaceHolder
 import android.util.Log
 import android.view.MotionEvent
+import android.widget.Toast
 
 
 /**
@@ -23,6 +24,7 @@ open class PongView constructor(context: Context, x: Int, y: Int, pontMáxima: I
     var mPontMaxima: Int
 
     var mModo: Int
+
 
     // We need a SurfaceHolder object
     // We will see it in action in the draw method soon.
@@ -59,9 +61,22 @@ open class PongView constructor(context: Context, x: Int, y: Int, pontMáxima: I
 
 
     fun setupAndRestart() {
+        var toast : Toast
         mBola.reset(mScreenX, mScreenY)
         mTaco.reset(mScreenX, mScreenY, 1)
         mTaco2.reset(mScreenX, mScreenY, 2)
+        if(mScorePlayer1 == 3){
+//            toast = Toast.makeText(context,"Vitória do Player01", Toast.LENGTH_LONG)
+//            toast.show()
+            mScorePlayer1 = 0
+            mScorePlayer2 = 0
+        }
+        else if (mScorePlayer2 == 3){
+//            toast = Toast.makeText(context,"Vitória do Player02", Toast.LENGTH_LONG)
+//            toast.show()
+            mScorePlayer1 = 0
+            mScorePlayer2 = 0
+        }
 //        mScorePlayer2 = 0
 //        mScorePlayer1 = 0
     }
@@ -115,7 +130,7 @@ open class PongView constructor(context: Context, x: Int, y: Int, pontMáxima: I
             Log.e("PongActivity", "Bola atingiu o Taco1 : " + mBola.getRekt())
             mBola.setRandomXVelocity()
             mBola.reverseXVelocity()
-            mBola.clearObstacleX(mTaco.getRect().left - 10)
+            mBola.clearObstacleX(mTaco.getRect().right + 10)
             mBola.increaseVelocity()
         }
 
@@ -126,7 +141,7 @@ open class PongView constructor(context: Context, x: Int, y: Int, pontMáxima: I
             Log.e("PongActivity", "Bola atingiu o Taco2 : " + mBola.getRekt())
             mBola.setRandomXVelocity()
             mBola.reverseXVelocity()
-            mBola.clearObstacleX(mTaco2.getRect().right - 10)
+            mBola.clearObstacleX(mTaco2.getRect().left - 20)
             mBola.increaseVelocity()
         }
 
@@ -241,7 +256,6 @@ open class PongView constructor(context: Context, x: Int, y: Int, pontMáxima: I
 
                 mPaused = false
                 Log.e("PongView", "Passou do pause")
-                // Is the touch on the right or left?
                 if (mModo == 1) {
                     Log.e("PongActivity", "Entrou no Modo01")
                     if (motionEvent.y < mScreenY / 2) {
@@ -274,8 +288,49 @@ open class PongView constructor(context: Context, x: Int, y: Int, pontMáxima: I
             }
         // Player has removed finger from screen
             MotionEvent.ACTION_UP ->
-                mTaco.setMovementState(mTaco.STOPPED)
-//            mTaco2.setMovementState(mTaco2.STOPPED)
+                if (mModo == 2){
+                    if (motionEvent.x < mScreenX / 2) {
+                        mTaco.setMovementState(mTaco.STOPPED)
+                    }else{
+                        mTaco2.setMovementState(mTaco2.STOPPED)
+                        }
+                }
+            else{
+                    mTaco.setMovementState(mTaco.STOPPED)
+                }
+//            MotionEvent.ACTION_POINTER_DOWN -> {
+//                mPaused = false
+//                Log.e("PongView", "Passou do pause")
+//                if (mModo == 1) {
+//                    Log.e("PongActivity", "Entrou no Modo01")
+//                    if (motionEvent.y < mScreenY / 2) {
+//                        Log.e("PongView", "Entrou no IF, posição : " + mTaco.getRect())
+//                        mTaco.setMovementState(mTaco.UP)
+//                    } else {
+//                        Log.e("PongView", "Entrou no ELSE, posição :" + mTaco.getRect())
+//                        mTaco.setMovementState(mTaco.DOWN)
+//                    }
+//                } else if (mModo == 2) {
+//                    Log.e("PongActivity", "Entrou no Modo02")
+//                    if (motionEvent.x < mScreenX / 2) {
+//                        if (motionEvent.y < mScreenY / 2) {
+//                            Log.e("PongView", "Entrou no IF, posição : " + mTaco.getRect())
+//                            mTaco.setMovementState(mTaco.UP)
+//                        } else {
+//                            Log.e("PongView", "Entrou no ELSE, posição :" + mTaco.getRect())
+//                            mTaco.setMovementState(mTaco.DOWN)
+//                        }
+//                    } else {
+//                        if (motionEvent.y < mScreenY / 2) {
+//                            Log.e("PongView", "Entrou no IF, posição : " + mTaco.getRect())
+//                            mTaco2.setMovementState(mTaco2.UP)
+//                        } else {
+//                            Log.e("PongView", "Entrou no ELSE, posição :" + mTaco.getRect())
+//                            mTaco2.setMovementState(mTaco2.DOWN)
+//                        }
+//                    }
+//                }
+//            }
         }
         return true
     }

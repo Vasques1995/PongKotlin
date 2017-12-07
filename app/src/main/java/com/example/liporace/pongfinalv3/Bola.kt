@@ -33,8 +33,16 @@ open class Bola constructor(screenX : Int , screenY : Int){
         mBallHeight = mBallWidth
 
         //Velocidade inicial da bola
-        mYVelocity = screenY / 4.toFloat()
-        mXVelocity = mYVelocity;
+        val aleatorioInicio = Random(10)
+        val result = aleatorioInicio.nextInt()
+        if (result != 0 || result > 6){
+            mYVelocity = (screenY / result).toFloat()
+            mXVelocity = mYVelocity;
+        }else{
+            mYVelocity = ((screenY / result) * -1).toFloat()
+            mXVelocity = mYVelocity;
+        }
+
 
         //Retangulo que é a estrutura da bola
         mRect = RectF()
@@ -74,8 +82,8 @@ open class Bola constructor(screenX : Int , screenY : Int){
     // A score of over 20 is quite difficult
     // Reduce or increase 10 to make this easier or harder
     fun increaseVelocity() {
-        mXVelocity = mXVelocity + mXVelocity / 10
-        mYVelocity = mYVelocity + mYVelocity / 10
+        mXVelocity = mXVelocity + mXVelocity / 13
+        mYVelocity = mYVelocity + mYVelocity / 13
     }
 
     fun clearObstacleY(y: Float) {
