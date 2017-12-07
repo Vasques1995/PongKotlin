@@ -1,0 +1,13 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar.Fullscreen">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="SplashTheme" parent="android:Theme.Material.Light.NoActionBar.Fullscreen">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
+
+</resources>
