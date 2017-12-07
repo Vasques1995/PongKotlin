@@ -39,8 +39,8 @@ open class Bola constructor(screenX : Int , screenY : Int){
             mYVelocity = (screenY / result).toFloat()
             mXVelocity = mYVelocity;
         }else{
-            mYVelocity = ((screenY / result) * -1).toFloat()
-            mXVelocity = mYVelocity;
+            mYVelocity = (screenY / result).toFloat()
+            mXVelocity = mYVelocity * -1
         }
 
 
@@ -97,17 +97,22 @@ open class Bola constructor(screenX : Int , screenY : Int){
     }
 
     fun reset(x: Int, y: Int) {
-//        val randomizador = Random()
-//        val resultBola : Int
-//        if (randomizador.nextInt(5) != 0){
-//            resultBola = randomizador.
-//        }
+        val randomizador = Random()
+        val resultBola = randomizador.nextInt(6)
+        if (resultBola != 0 || resultBola > 2){
+            mYVelocity = this.screenAltura / resultBola.toFloat()
+            mXVelocity = -mYVelocity
+        }
+        else{
+            mXVelocity = mYVelocity
+        }
 
         mRect.left = x / 2.toFloat()
         mRect.top = y / 2.toFloat()
         mRect.right = x / 2 + mBallWidth
         mRect.bottom = y /2 - mBallHeight
-        mYVelocity = this.screenAltura / 4.toFloat()
-        mXVelocity = mYVelocity
+
+//        mYVelocity = this.screenAltura / 4.toFloat()
+//        mXVelocity = -mYVelocity
     }
 }
