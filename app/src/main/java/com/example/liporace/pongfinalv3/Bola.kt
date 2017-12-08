@@ -8,12 +8,10 @@ import android.R.attr.right
 import android.R.attr.left
 
 
-
-
 /**
  * Created by Liporace on 24/11/2017.
  */
-open class Bola constructor(screenX : Int , screenY : Int){
+open class Bola constructor(screenX: Int, screenY: Int) {
 
     private var mRect: RectF
     private var mXVelocity: Float
@@ -21,8 +19,8 @@ open class Bola constructor(screenX : Int , screenY : Int){
     private val mBallWidth: Float
     private val mBallHeight: Float
 
-    private var screenAltura : Int
-    private var screenLargura : Int
+    private var screenAltura: Int
+    private var screenLargura: Int
 
     init {
 
@@ -33,14 +31,14 @@ open class Bola constructor(screenX : Int , screenY : Int){
         mBallHeight = mBallWidth
 
         //Velocidade inicial da bola
-        val aleatorioInicio = Random(10)
+        val aleatorioInicio = Random(5)
         val result = aleatorioInicio.nextInt()
-        if (result != 0 || result > 6){
+        if (result != 0 && result > 2) {
             mYVelocity = (screenY / result).toFloat()
             mXVelocity = mYVelocity;
-        }else{
-            mYVelocity = (screenY / result).toFloat()
-            mXVelocity = mYVelocity * -1
+        }  else {
+            mYVelocity = this.screenAltura / 4.toFloat()
+            mXVelocity = -mYVelocity
         }
 
 
@@ -49,7 +47,7 @@ open class Bola constructor(screenX : Int , screenY : Int){
     }
 
     //Conseguir uma referência ao objeto da bola
-    fun getRekt() : RectF = mRect
+    fun getRekt(): RectF = mRect
 
     // Change the position each frame
     fun update(fps: Long) {
@@ -82,8 +80,8 @@ open class Bola constructor(screenX : Int , screenY : Int){
     // A score of over 20 is quite difficult
     // Reduce or increase 10 to make this easier or harder
     fun increaseVelocity() {
-        mXVelocity = mXVelocity + mXVelocity / 13
-        mYVelocity = mYVelocity + mYVelocity / 13
+        mXVelocity = mXVelocity + mXVelocity / 12
+        mYVelocity = mYVelocity + mYVelocity / 12
     }
 
     fun clearObstacleY(y: Float) {
@@ -98,21 +96,20 @@ open class Bola constructor(screenX : Int , screenY : Int){
 
     fun reset(x: Int, y: Int) {
         val randomizador = Random()
-        val resultBola = randomizador.nextInt(6)
-        if (resultBola != 0 || resultBola > 2){
+        val resultBola = randomizador.nextInt(3)
+
+        if (resultBola != 0 && resultBola > 1) {
             mYVelocity = this.screenAltura / resultBola.toFloat()
             mXVelocity = -mYVelocity
-        }
-        else{
-            mXVelocity = mYVelocity
+        } else {
+            mYVelocity = this.screenAltura / 4.toFloat()
+            mXVelocity = -mYVelocity
         }
 
         mRect.left = x / 2.toFloat()
         mRect.top = y / 2.toFloat()
         mRect.right = x / 2 + mBallWidth
-        mRect.bottom = y /2 - mBallHeight
+        mRect.bottom = y / 2 - mBallHeight
 
-//        mYVelocity = this.screenAltura / 4.toFloat()
-//        mXVelocity = -mYVelocity
     }
 }
